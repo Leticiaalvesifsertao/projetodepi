@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recicla+</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;900&display=swap" rel="stylesheet" />
+
+
+  <style>
+    :root {
+      --primary-color: #273c06;
+      --secondary-color: #196c0c;
+      --text-color: beige;
+      --background-color: #ece3d4;
+    }
+
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+    }
+
+    header {
+      background-color: var(--primary-color);
+      padding: 10px 0;
+      position: relative;
+    }
+
+    .recicla {
+      font-family: "Playfair Display", serif;
+      color: var(--text-color);
+      text-align: center;
+      margin: 0;
+    }
+
+    .menu-button {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background: var(--primary-color);
+      color: var(--text-color);
+      border: none;
+      font-size: 24px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #333;
+      transition: left 0.3s ease;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .menu-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .menu-items li a {
+      display: block;
+      padding: 12px 20px;
+      color: var(--text-color);
+      text-decoration: none;
+    }
+
+    .menu-items li a:hover {
+      background-color: #444;
+    }
+
+    .login-container {
+      max-width: 500px;
+      margin: 100px auto;
+      background-color: var(--secondary-color);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .login-container h2,
+    .login-form label {
+      color: var(--text-color);
+    }
+
+    .login-form input {
+      width: 80%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .login-form button {
+      background-color: var(--primary-color);
+      color: var(--text-color);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+
+    footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    footer a {
+      color: #fff;
+      margin: 0 8px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
+        width: 90%;
+        margin-top: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="menu-button" aria-label="Abrir menu lateral">☰</button>
+    <h1 class="recicla">Recicla+</h1>
+    <hr class="solid" />
+    <nav class="sidebar" aria-label="Menu lateral">
+      <button class="close-button" aria-label="Fechar menu">×</button>
+      <ul class="menu-items">
+        <li><a href="Entrar.html">Início</a></li>
+        <li><a href="ajuda.html">Ajuda</a></li>
+        <li><a href="perfil.html">Perfil</a></li>
+        <li><a href="comunidade.html">Comunidade</a></li>
+        <li><a href="reciclagem.html">Recolha seu lixo</a></li>
+        <li><a href="pontos.html">Pontos de coleta</a></li>
+        <li><a href="sobre.html">Sobre nós</a></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form class="login-form" id="login-form" onsubmit="return validateLogin(event)">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required />
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required />
+        <button type="submit">Entrar</button>
+      </form>
+      <p class="error-message" id="error-message">Usuário ou senha incorretos. Tente novamente.</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Recicla+. Todos os direitos reservados.</p>
+    <p>
+      <a href="sobre.html">Sobre nós</a> |
+      <a href="privacidade.html">Política de Privacidade</a> |
+      <a href="contato.html">Contato</a>
+    </p>
+    <div>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    function validateLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const correctUsername = 'usuario';
+      const correctPassword = 'senha123';
+
+      if (username === correctUsername && password === correctPassword) {
+        window.location.href = 'paginainicial.html';
+      } else {
+        document.getElementById('error-message').style.display = 'block';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuButton = document.querySelector('.menu-button');
+      const closeButton = document.querySelector('.close-button');
+      const sidebar = document.querySelector('.sidebar');
+
+      menuButton.addEventListener('click', () => sidebar.classList.add('active'));
+      closeButton.addEventListener('click', () => sidebar.classList.remove('active'));
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

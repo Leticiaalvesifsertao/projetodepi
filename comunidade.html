@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Comunidade Recicla+</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #273c06;
+            --secondary-color: #196c0c;
+            --text-color: beige;
+            --background-color: #ece3d4;
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding-bottom: 60px; /* espaço para o rodapé */
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .profile-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .btn-profile {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--primary-color);
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .content-container, .suggestion-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .content-card, .suggestion-card {
+            width: 30%;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Comunidade Recicla+</h1>
+    </header>
+
+    <div class="container">
+        <!-- Navegação de abas -->
+        <ul class="nav nav-tabs" id="communityTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-profile" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">Sugestões</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-content" data-bs-toggle="tab" data-bs-target="#content" type="button" role="tab">Conteúdos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-myprofile" data-bs-toggle="tab" data-bs-target="#myprofile" type="button" role="tab">Meu Perfil</button>
+            </li>
+        </ul>
+
+        <!-- Conteúdo das abas -->
+        <div class="tab-content mt-3">
+            <!-- Aba de Sugestões -->
+            <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                <h2 class="profile-title">Sugestões de Amigos</h2>
+                <div class="suggestion-container">
+                    <div class="card suggestion-card">
+                        <img src="https://randomuser.me/api/portraits/men/10.jpg" class="card-img-top" alt="João Pereira">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">João Pereira</h5>
+                            <p class="card-text">34 anos - Rio de Janeiro</p>
+                            <button class="btn-profile">Adicionar</button>
+                        </div>
+                    </div>
+                    <div class="card suggestion-card">
+                        <img src="https://randomuser.me/api/portraits/women/12.jpg" class="card-img-top" alt="Ana Souza">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Ana Souza</h5>
+                            <p class="card-text">28 anos - São Paulo</p>
+                            <button class="btn-profile">Adicionar</button>
+                        </div>
+                    </div>
+                    <div class="card suggestion-card">
+                        <img src="https://randomuser.me/api/portraits/men/5.jpg" class="card-img-top" alt="Carlos Lima">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Carlos Lima</h5>
+                            <p class="card-text">25 anos - Belo Horizonte</p>
+                            <button class="btn-profile">Adicionar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba de Conteúdos -->
+            <div class="tab-pane fade" id="content" role="tabpanel">
+                <h2 class="profile-title">Conteúdos da Comunidade</h2>
+                <div class="content-container">
+                    <div class="card content-card">
+                        <img src="https://s1.static.brasilescola.uol.com.br/be/conteudo/images/sustentabilidade.jpg" class="card-img-top" alt="Sustentabilidade">
+                        <div class="card-body">
+                            <h5 class="card-title">Sustentabilidade nas Cidades</h5>
+                            <p class="card-text">Iniciativas sustentáveis para preservar o meio ambiente.</p>
+                            <a href="#" class="btn btn-primary">Leia mais</a>
+                        </div>
+                    </div>
+                    <div class="card content-card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-THDIkCEJAlpwKtrOyujzLBaz6ZvKlCyphg&s" class="card-img-top" alt="Reciclagem">
+                        <div class="card-body">
+                            <h5 class="card-title">Reciclagem e Coleta Seletiva</h5>
+                            <p class="card-text">Como a coleta seletiva pode beneficiar a sociedade.</p>
+                            <a href="#" class="btn btn-primary">Leia mais</a>
+                        </div>
+                    </div>
+                    <div class="card content-card">
+                        <img src="https://orizonvr.com.br/novo_site/wp-content/uploads/2022/12/img-top-cred-reciclagem.png" class="card-img-top" alt="Lixo Zero">
+                        <div class="card-body">
+                            <h5 class="card-title">Iniciativa Lixo Zero</h5>
+                            <p class="card-text">Práticas para alcançar a meta do "lixo zero".</p>
+                            <a href="#" class="btn btn-primary">Leia mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba do Meu Perfil -->
+            <div class="tab-pane fade" id="myprofile" role="tabpanel">
+                <h2 class="profile-title">Meu Perfil - João Pereira</h2>
+                <div class="text-center">
+                    <div class="card mx-auto" style="max-width: 300px;">
+                        <img src="https://randomuser.me/api/portraits/men/10.jpg" class="card-img-top" alt="Imagem de Perfil">
+                        <div class="card-body">
+                            <h5 class="card-title">João Pereira</h5>
+                            <p class="card-text">34 anos - Rio de Janeiro</p>
+                            <p class="card-text">Interesses: Sustentabilidade, Reciclagem, Meio Ambiente</p>
+                            <button class="btn-profile">Editar Perfil</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="profile-title mt-4">Meus Conteúdos</h2>
+                <div class="content-container">
+                    <!-- Reutiliza os mesmos cards de conteúdo -->
+                    <!-- Você pode diferenciá-los se quiser -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>Comunidade Recicla+ &copy; 2025</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

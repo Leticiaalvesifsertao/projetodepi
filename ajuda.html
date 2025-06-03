@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot de Ajuda - Recicla+</title>
+  <style>
+    :root {
+      --primary: #273c06;
+      --secondary: #196c0c;
+      --background: #ece3d4;
+      --light: #f9f9f9;
+      --accent: #d9f7be;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--background);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .chat-container {
+      width: 320px;
+      max-width: 90vw;
+      height: 450px;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chat-header {
+      background-color: var(--secondary);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: var(--light);
+    }
+
+    .chat-body p {
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .user-msg {
+      background-color: var(--accent);
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .bot-msg {
+      background-color: #e0e0e0;
+      text-align: left;
+      margin-right: auto;
+    }
+
+    .chat-footer {
+      display: flex;
+      border-top: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+
+    .chat-footer button {
+      padding: 8px 12px;
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .chat-footer button:hover {
+      background-color: var(--primary);
+    }
+
+    .faq-container {
+      margin: 30px auto;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .faq-container h2 {
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .faq-container ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .faq-container li {
+      background-color: #f1f1f1;
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .faq-container li:hover {
+      background-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Chatbot de Ajuda - Recicla+</h1>
+  </header>
+
+  <div class="chat-container">
+    <div class="chat-header">Assistente Virtual</div>
+    <div class="chat-body" id="chat-body">
+      <p class="bot-msg">Olá! Como posso te ajudar hoje? 😊</p>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="user-input" placeholder="Digite sua mensagem..." onkeydown="checkEnter(event)" />
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <div class="faq-container">
+    <h2>Perguntas Frequentes</h2>
+    <ul>
+      <li onclick="faqResponse('Como faço para reciclar?')">Como faço para reciclar?</li>
+      <li onclick="faqResponse('Onde estão os pontos de coleta?')">Onde estão os pontos de coleta?</li>
+      <li onclick="faqResponse('Qual material pode ser reciclado?')">Qual material pode ser reciclado?</li>
+      <li onclick="faqResponse('Como posso participar de uma campanha de limpeza?')">Como posso participar de uma campanha de limpeza?</li>
+    </ul>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const message = input.value.trim();
+      if (message) {
+        addMessage(message, 'user-msg');
+        input.value = '';
+        setTimeout(() => botResponse(message), 800);
+      }
+    }
+
+    function checkEnter(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    }
+
+    function addMessage(text, className) {
+      const chatBody = document.getElementById('chat-body');
+      const msg = document.createElement('p');
+      msg.className = className;
+      msg.textContent = text;
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function botResponse(message) {
+      const msg = message.toLowerCase();
+
+      let response = "Desculpe, não entendi. Pode reformular sua pergunta?";
+
+      if (msg.includes("reciclar")) {
+        response = "Você pode começar separando materiais como papel, plástico, vidro e metal. Em seguida, leve-os até um ponto de coleta seletiva próximo.";
+      } else if (msg.includes("pontos de coleta")) {
+        response = "Você pode visualizar os pontos de coleta no nosso mapa interativo na página 'Pontos de Coleta'.";
+      } else if (msg.includes("material recicl")) {
+        response = "Papéis, plásticos, metais, vidros e eletrônicos são exemplos de materiais recicláveis.";
+      } else if (msg.includes("campanha de limpeza")) {
+        response = "Participe de campanhas acessando a aba 'Comunidade'. Lá estão os eventos e ações próximas de você!";
+      }
+
+      addMessage(response, 'bot-msg');
+    }
+
+    function faqResponse(question) {
+      addMessage(question, 'user-msg');
+      setTimeout(() => botResponse(question), 800);
+    }
+  </script>
+</body>
+</html>
