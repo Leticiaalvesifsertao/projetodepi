@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comunidade Recicla+</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #273c06;
+      --secondary-color: #196c0c;
+      --text-color: beige;
+      --background-color: #ece3d4;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--background-color);
+      margin: 0;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: var(--text-color);
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 30px;
+    }
+
+    .profile-title {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .card-img-top {
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .btn-profile {
+      background-color: var(--primary-color);
+      color: var(--text-color);
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .nav-tabs .nav-link {
+      color: var(--primary-color);
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: var(--primary-color);
+      color: var(--text-color);
+    }
+
+    .content-container, .suggestion-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .content-card, .suggestion-card {
+      width: 250px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      background-color: var(--primary-color);
+      color: var(--text-color);
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+
+    .perfil-img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border: 4px solid var(--secondary-color);
+      border-radius: 8px;
+      margin: 20px auto 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: block;
+    }
+
+    .add-button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .add-button {
+      background-color: var(--secondary-color);
+      color: white;
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+    }
+
+    .add-button:hover {
+      background-color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Comunidade Recicla+</h1>
+  </header>
+
+  <div class="container">
+    <a href="paginainicial.html" class="btn btn-outline-secondary mb-3">← Voltar ao Início</a>
+
+    <ul class="nav nav-tabs" id="communityTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-profile" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">Sugestões</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-content" data-bs-toggle="tab" data-bs-target="#content" type="button" role="tab">Conteúdos</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-myprofile" data-bs-toggle="tab" data-bs-target="#myprofile" type="button" role="tab">Meu Perfil</button>
+      </li>
+    </ul>
+
+    <div class="tab-content mt-3">
+      <!-- Sugestões -->
+      <div class="tab-pane fade show active" id="profile" role="tabpanel">
+        <h2 class="profile-title">Sugestões de Amigos</h2>
+        <div class="suggestion-container">
+          <!-- Amigo 1 -->
+          <div class="card suggestion-card">
+            <img src="edson.png" class="card-img-top" alt="Edson do Carmo">
+            <div class="card-body text-center">
+              <h5 class="card-title">Edson do Carmo</h5>
+              <p class="card-text">17 anos - Petrolina-PE</p>
+              <button class="btn-profile" onclick="enviarSolicitacao(this)">Adicionar</button>
+            </div>
+          </div>
+
+          <!-- Amigo 2 -->
+          <div class="card suggestion-card">
+            <img src="Captura de tela 2025-06-04 114835.png" class="card-img-top" alt="Letícia Alves">
+            <div class="card-body text-center">
+              <h5 class="card-title">Letícia Alves</h5>
+              <p class="card-text">17 anos - Dormentes</p>
+              <button class="btn-profile" onclick="enviarSolicitacao(this)">Adicionar</button>
+            </div>
+          </div>
+
+          <!-- Amigo 3 -->
+          <div class="card suggestion-card">
+            <img src="clara.2kk.jpg" class="card-img-top" alt="Clara Vieira">
+            <div class="card-body text-center">
+              <h5 class="card-title">Clara Vieira</h5>
+              <p class="card-text">17 anos - Petrolina-PE</p>
+              <button class="btn-profile" onclick="enviarSolicitacao(this)">Adicionar</button>
+            </div>
+          </div>
+
+          <!-- Amigo 4 -->
+          <div class="card suggestion-card">
+            <img src="Captura de tela 2025-06-04 115608.png" class="card-img-top" alt="Kelly Viana">
+            <div class="card-body text-center">
+              <h5 class="card-title">Kelly Viana</h5>
+              <p class="card-text">18 anos - Rajada</p>
+              <button class="btn-profile" onclick="enviarSolicitacao(this)">Adicionar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conteúdos -->
+      <div class="tab-pane fade" id="content" role="tabpanel">
+        <h2 class="profile-title">Conteúdos da Comunidade</h2>
+        <div class="content-container">
+          <div class="card content-card">
+            <img src="coleta seletiva.jpg" class="card-img-top" alt="Sustentabilidade nas Cidades">
+            <div class="card-body">
+              <h5 class="card-title">Sustentabilidade nas Cidades</h5>
+              <p class="card-text">Iniciativas sustentáveis para preservar o meio ambiente.</p>
+              <a href="sustentabilidade.html" class="btn btn-primary">Leia mais</a>
+            </div>
+          </div>
+          <div class="card content-card">
+            <img src="coleta seletiva.jpg" class="card-img-top" alt="Reciclagem">
+            <div class="card-body">
+              <h5 class="card-title">Reciclagem e Coleta Seletiva</h5>
+              <p class="card-text">Como a coleta seletiva pode beneficiar a sociedade.</p>
+              <a href="coletaseletiva.html" class="btn btn-primary">Leia mais</a>
+            </div>
+          </div>
+          <div class="card content-card">
+            <img src="lixo zero.jpg" class="card-img-top" alt="Lixo Zero">
+            <div class="card-body">
+              <h5 class="card-title">Iniciativa Lixo Zero</h5>
+              <p class="card-text">Práticas para alcançar a meta do "lixo zero".</p>
+              <a href="lixozero.html" class="btn btn-primary">Leia mais</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meu Perfil -->
+      <div class="tab-pane fade" id="myprofile" role="tabpanel">
+        <h2 class="profile-title">Meu Perfil</h2>
+        <div class="text-center">
+          <div class="card mx-auto" style="max-width: 300px;">
+            <img src="Captura de tela 2025-06-04 114835.png" class="card-img-top perfil-img" alt="Imagem de Perfil">
+            <div class="card-body">
+              <h5 class="card-title">Letícia Alves</h5>
+              <p class="card-text">17 anos - Petrolina</p>
+              <p class="card-text">Interesses: Sustentabilidade, Reciclagem, Meio Ambiente</p>
+              <button class="btn-profile">Editar Perfil</button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="profile-title mt-4">Meus Conteúdos</h2>
+        <div class="content-container">
+          <div class="add-button-container" id="addButton">
+            <button class="add-button" onclick="alert('Adicionar novo conteúdo!')">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Comunidade Recicla+ &copy; 2025</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function enviarSolicitacao(botao) {
+      botao.disabled = true;
+      botao.textContent = 'Solicitação enviada';
+      setTimeout(() => {
+        botao.textContent = 'Solicitação aprovada';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

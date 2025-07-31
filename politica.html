@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Política de Privacidade - Recicla+</title>
+<style>
+  
+  body {
+    font-family: 'arial';
+    background-color: #ece3d4;
+    color: #273c06;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    padding-top: 80px;
+  }
+  
+  main {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+  }
+  h1 {
+    font-family: 'habibi';
+    color: #273c06;
+    font-size: 3rem;
+    margin-bottom: 30px;
+  }
+  .policy-box {
+    background-color: #d4edda; 
+    border: 2px solid #273c06; 
+    padding: 30px 40px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #196c0c;
+    font-size: 1.3rem;
+  }
+  input[type="checkbox"] {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+  button {
+    background-color: #273c06;
+    color: beige;
+    border: none;
+    padding: 16px 36px;
+    font-size: 1.5rem;
+    border-radius: 8px;
+    cursor: not-allowed;
+    opacity: 0.6;
+    margin-top: 20px;
+  }
+  button.enabled {
+    cursor: pointer;
+    opacity: 1;
+    transition: background-color 0.3s ease;
+  }
+  button.enabled:hover {
+    background-color: #273c06;
+  }
+</style>
+</head>
+<body>
+  <header style="position: fixed; top: 0; left: 0; width: 100%; background-color: #273c06; color: white; padding: 20px 0; text-align: center; font-family: 'habibi'; font-size: 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+    Política de Privacidade
+  </header>
+
+<main style="margin-top: 80px;">
+  <h1>Política de Privacidade</h1>
+
+  <div class="policy-box">
+    <p>Bem-vindo ao Recicla+! Nós valorizamos a sua privacidade e queremos garantir que você saiba como coletamos, usamos e protegemos suas informações.</p>
+    <p>Coletamos apenas dados essenciais para melhorar sua experiência. Nunca compartilhamos suas informações com terceiros sem a sua permissão e usamos tecnologias seguras para proteger seus dados.</p>
+    <p>Para continuar usando nosso site, por favor, leia nossa política de privacidade e confirme sua aceitação abaixo.</p>
+  </div>
+
+  <form id="policyForm" action="paginainicial.html" method="get">
+    <label>
+      <input type="checkbox" id="acceptCheckbox" />
+      Li e aceito a Política de Privacidade do Recicla+
+    </label>
+    <br />
+    <button type="submit" id="submitBtn" disabled>Continuar</button>
+  </form>
+</main>
+
+<script>
+  const checkbox = document.getElementById('acceptCheckbox');
+  const submitBtn = document.getElementById('submitBtn');
+
+  checkbox.addEventListener('change', () => {
+    if (checkbox.checked) {
+      submitBtn.disabled = false;
+      submitBtn.classList.add('enabled');
+    } else {
+      submitBtn.disabled = true;
+      submitBtn.classList.remove('enabled');
+    }
+  });
+</script>
+
+</body>
+</html>

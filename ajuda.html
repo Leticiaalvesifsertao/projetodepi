@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chatbot de Ajuda - Recicla+</title>
+  <style>
+    :root {
+      --primary: #273c06;
+      --secondary: #196c0c;
+      --background: #ece3d4;
+      --light: #f9f9f9;
+      --accent: #d9f7be;
+    }
+    body {
+      font-family: 'arial';
+      background-color: var(--background);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+    .chat-container {
+      width: 320px;
+      max-width: 90vw;
+      height: 500px;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+    .chat-header {
+      background-color: var(--secondary);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: normal;
+      font-size: 1.2rem;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: var(--light);
+    }
+    .chat-body p {
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      max-width: 80%;
+      word-wrap: break-word;
+      line-height: 1.3;
+      font-size: 0.9rem;
+    }
+    .user-msg {
+      background-color: var(--accent);
+      text-align: right;
+      margin-left: auto;
+      color: #000;
+    }
+    .bot-msg {
+      background-color: #e0e0e0;
+      text-align: left;
+      margin-right: auto;
+      color: #000;
+    }
+    .chat-footer {
+      display: flex;
+      border-top: 1px solid #ccc;
+      padding: 10px;
+      background-color: #fff;
+    }
+    .chat-footer input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 6px;
+      font-size: 1rem;
+    }
+    .chat-footer button {
+      padding: 8px 12px;
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .chat-footer button:hover {
+      background-color: var(--primary);
+    }
+    .faq-container {
+      margin: 30px auto;
+      max-width: 320px;
+      text-align: center;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+    .faq-container h2 {
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    .faq-container ul {
+      list-style: none;
+      padding: 0;
+    }
+    .faq-container li {
+      background-color: #f1f1f1;
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border: 1px solid #ddd;
+    }
+    .faq-container li:hover {
+      background-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Chatbot de Ajuda - Recicla+</h1>
+  </header>
+
+  <!-- Botão de voltar ao início -->
+  <a href="paginainicial.html" class="btn btn-outline-secondary" style="margin: 20px; display: inline-block; border: 1px solid #273c06; color: #273c06; padding: 8px 16px; border-radius: 6px; text-decoration: none;">← Voltar ao Início</a>
+
+  <div class="chat-container" aria-label="Chatbot de ajuda">
+    <div class="chat-header" role="heading" aria-level="2">Assistente Virtual</div>
+    <div class="chat-body" id="chat-body" role="log" aria-live="polite">
+      <p class="bot-msg">Olá! Como posso te ajudar hoje? 😊</p>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="user-input" placeholder="Digite sua mensagem..." aria-label="Mensagem do usuário" onkeydown="if(event.key==='Enter'){sendMessage();}" />
+      <button onclick="sendMessage()" aria-label="Enviar mensagem">Enviar</button>
+    </div>
+  </div>
+
+  <div class="faq-container" aria-label="Perguntas frequentes">
+    <h2>Perguntas Frequentes</h2>
+    <ul>
+      <li onclick="faqResponse('Como faço para reciclar?')">Como faço para reciclar?</li>
+      <li onclick="faqResponse('Onde estão os pontos de coleta?')">Onde estão os pontos de coleta?</li>
+      <li onclick="faqResponse('Qual material pode ser reciclado?')">Qual material pode ser reciclado?</li>
+      <li onclick="faqResponse('Como posso participar de uma campanha de limpeza?')">Como posso participar de uma campanha de limpeza?</li>
+    </ul>
+  </div>
+
+<script>
+  const respostasFAQ = {
+    "como faço para reciclar?": "Você pode começar separando materiais como papel, plástico, vidro e metal. Em seguida, leve-os até um ponto de coleta seletiva próximo.",
+    "onde estão os pontos de coleta?": "Você pode visualizar os pontos de coleta no nosso mapa interativo na página 'Pontos de Coleta'.",
+    "qual material pode ser reciclado?": "Papéis, plásticos, metais, vidros e eletrônicos são exemplos de materiais recicláveis.",
+    "como posso participar de uma campanha de limpeza?": "Participe de campanhas acessando a aba 'Comunidade'. Lá estão os eventos e ações próximas de você!"
+  };
+
+  function sendMessage() {
+    const input = document.getElementById('user-input');
+    const message = input.value.trim();
+    if (!message) return;
+
+    addMessage(message, 'user-msg');
+    input.value = '';
+
+    // Sempre responde padrão para texto digitado (não FAQ clicada)
+    setTimeout(() => {
+      addMessage("Obrigado pela mensagem! Para responder melhor, por favor envie seu contato para nosso e-mail: contato@recicla.com.br", 'bot-msg');
+    }, 700);
+  }
+
+  function addMessage(text, className) {
+    const chatBody = document.getElementById('chat-body');
+    const msg = document.createElement('p');
+    msg.className = className;
+    msg.textContent = text;
+    chatBody.appendChild(msg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function faqResponse(question) {
+    // Ao clicar numa pergunta pré-definida, adiciona mensagem do usuário e resposta da FAQ
+    addMessage(question, 'user-msg');
+    setTimeout(() => {
+      const lowerQuestion = question.toLowerCase();
+      if (respostasFAQ[lowerQuestion]) {
+        addMessage(respostasFAQ[lowerQuestion], 'bot-msg');
+      } else {
+        addMessage("Desculpe, não tenho resposta para essa pergunta.", 'bot-msg');
+      }
+    }, 700);
+  }
+</script>
+
+</body>
+</html>

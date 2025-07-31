@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Recicla+ - Rastreio de Coleta</title>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  crossorigin=""
+/>
+<style>
+  body {
+    margin: 0; padding: 0;
+    font-family: Arial, sans-serif;
+    background: #ece3d4;
+  }
+  #map {
+    height: 60vh;
+    width: 100%;
+  }
+  #container {
+    max-width: 600px;
+    margin: 10px auto;
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 0 10px #aaa;
+  }
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  select, input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #999;
+    margin-top: 5px;
+    font-size: 16px;
+  }
+  #status {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+    min-height: 30px;
+  }
+  #confirm-btn {
+    margin-top: 15px;
+    background: #196c0c;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    display: none;
+  }
+  #premios {
+    margin-top: 15px;
+    font-size: 40px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1 style="text-align:center; color:#196c0c; margin:15px 0;">Recicla+ - Rastreio de Coleta</h1>
+
+<div id="container">
+  <form id="address-form" aria-label="Formulário de endereço para coleta">
+    <label for="bairro">Bairro</label>
+    <select id="bairro" name="bairro" required>
+      <option value="">-- Selecione um bairro --</option>
+      <option value="Centro">Centro</option>
+      <option value="Areia Branca">Areia Branca</option>
+      <option value="José e Maria">José e Maria</option>
+      <option value="Vila Eduardo">Vila Eduardo</option>
+      <option value="Atrás da Banca">Atrás da Banca</option>
+      <option value="Quidé">Quidé</option>
+      <option value="Palhinhas">Palhinhas</option>
+      <option value="Dom Avelar">Dom Avelar</option>
+      <option value="Cohab Massangano">Cohab Massangano</option>
+      <option value="Cohab Massangano II">Cohab Massangano II</option>
+      <option value="Cohab Massangano III">Cohab Massangano III</option>
+      <option value="Cosme e Damião">Cosme e Damião</option>
+      <option value="Gercino Coelho">Gercino Coelho</option>
+      <option value="Ipueiras">Ipueiras</option>
+      <option value="Jardim Amazonas">Jardim Amazonas</option>
+      <option value="Jardim Maravilha">Jardim Maravilha</option>
+      <option value="Jatobá">Jatobá</option>
+      <option value="N-7">N-7</option>
+      <option value="Nova Vida">Nova Vida</option>
+      <option value="Palmeira">Palmeira</option>
+      <option value="Parque Mandacaru">Parque Mandacaru</option>
+      <option value="Piranga">Piranga</option>
+      <option value="Quati">Quati</option>
+      <option value="Rio Corrente">Rio Corrente</option>
+      <option value="São Gonçalo">São Gonçalo</option>
+      <option value="São Jorge">São Jorge</option>
+      <option value="São José">São José</option>
+      <option value="São José do Egito">São José do Egito</option>
+      <option value="Tancredo Neves">Tancredo Neves</option>
+      <option value="Vila Mocó">Vila Mocó</option>
+      <option value="Vila Mocó II">Vila Mocó II</option>
+      <option value="Vila Mocó III">Vila Mocó III</option>
+      <option value="Zona Industrial">Zona Industrial</option>
+      <option value="Cohab Massangano IV">Cohab Massangano IV</option>
+      <option value="Residencial Vila do Sol">Residencial Vila do Sol</option>
+      <option value="Residencial Monsenhor">Residencial Monsenhor</option>
+      <option value="Residencial São Francisco">Residencial São Francisco</option>
+    </select>
+
+    <label for="rua">Rua</label>
+    <input type="text" id="rua" name="rua" placeholder="Digite sua rua" required />
+
+    <button type="submit">Confirmar Endereço</button>
+  </form>
+
+  <div id="status" aria-live="polite" role="alert"></div>
+  <button id="confirm-btn">Lixo Coletado</button>
+  <div id="premios" aria-label="Prêmios conquistados"></div>
+</div>
+
+<div id="map"></div>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  crossorigin=""
+></script>
+
+<script>
+  const bairrosCoords = {
+    "Centro": [-9.3957, -40.5021],
+    "Areia Branca": [-9.405, -40.510],
+    "José e Maria": [-9.410, -40.495],
+    "Vila Eduardo": [-9.390, -40.515],
+    "Atrás da Banca": [-9.380, -40.505],
+    "Quidé": [-9.400, -40.520],
+    "Palhinhas": [-9.385, -40.490],
+    "Dom Avelar": [-9.370, -40.485],
+    "Cohab Massangano": [-9.410, -40.500],
+    "Cohab Massangano II": [-9.415, -40.505],
+    "Cohab Massangano III": [-9.420, -40.510],
+    "Cosme e Damião": [-9.425, -40.515],
+    "Gercino Coelho": [-9.430, -40.520],
+    "Ipueiras": [-9.435, -40.525],
+    "Jardim Amazonas": [-9.440, -40.530],
+    "Jardim Maravilha": [-9.445, -40.535],
+    "Jatobá": [-9.450, -40.540],
+    "N-7": [-9.455, -40.545],
+    "Nova Vida": [-9.460, -40.550],
+    "Palmeira": [-9.465, -40.555],
+    "Parque Mandacaru": [-9.470, -40.560],
+    "Piranga": [-9.475, -40.565],
+    "Quati": [-9.480, -40.570],
+    "Rio Corrente": [-9.485, -40.575],
+    "São Gonçalo": [-9.490, -40.580],
+    "São Jorge": [-9.495, -40.585],
+    "São José": [-9.500, -40.590],
+    "São José do Egito": [-9.505, -40.595],
+    "Tancredo Neves": [-9.510, -40.600],
+    "Vila Mocó": [-9.515, -40.605],
+    "Vila Mocó II": [-9.520, -40.610],
+    "Vila Mocó III": [-9.525, -40.615],
+    "Zona Industrial": [-9.530, -40.620],
+    "Cohab Massangano IV": [-9.535, -40.625],
+    "Residencial Vila do Sol": [-9.540, -40.630],
+    "Residencial Monsenhor": [-9.545, -40.635],
+    "Residencial São Francisco": [-9.550, -40.640]
+  };
+
+  const inicioCoords = [-9.4000, -40.5000]; // ponto inicial do caminhão
+
+  const map = L.map('map').setView(inicioCoords, 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+  }).addTo(map);
+
+  const truckIcon = L.icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/1995/1995531.png',
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+  });
+
+  let truckMarker = L.marker(inicioCoords, { icon: truckIcon }).addTo(map);
+
+  const form = document.getElementById('address-form');
+  const statusDiv = document.getElementById('status');
+  const confirmBtn = document.getElementById('confirm-btn');
+  const premiosDiv = document.getElementById('premios');
+
+  let pontos = 0;
+  let bairroEscolhido = null;
+  let animando = false;
+
+  // Prêmios para mostrar, emojis diferentes
+  const premios = ['🌳', '🌿', '🏆'];
+
+  // Lista dos bairros para o caminhão circular
+  const bairrosParaRota = Object.keys(bairrosCoords);
+
+  // Função para criar uma rota linear entre dois pontos com vários passos
+  function criarRotaSimples(inicio, fim, passos = 100) {
+    const rota = [];
+    for (let i = 0; i <= passos; i++) {
+      const lat = inicio[0] + ((fim[0] - inicio[0]) * i) / passos;
+      const lng = inicio[1] + ((fim[1] - inicio[1]) * i) / passos;
+      rota.push([lat, lng]);
+    }
+    return rota;
+  }
+
+  // Função para animar o caminhão pela rota e verificar se chegou ao bairro escolhido
+  async function animarRota(rota) {
+    animando = true;
+    confirmBtn.style.display = 'none';
+    statusDiv.textContent = "Caminhão a caminho...";
+
+    for (let i = 0; i < rota.length; i++) {
+      const pos = rota[i];
+      truckMarker.setLatLng(pos);
+      map.panTo(pos);
+
+      // Verifica se o caminhão está perto do bairro escolhido (a 0.0005 graus lat/lng)
+      if (
+        bairroEscolhido &&
+        Math.abs(pos[0] - bairrosCoords[bairroEscolhido][0]) < 0.0005 &&
+        Math.abs(pos[1] - bairrosCoords[bairroEscolhido][1]) < 0.0005
+      ) {
+        statusDiv.textContent = `O caminhão está passando por ${bairroEscolhido}! Leve o lixo para fora!`;
+        confirmBtn.style.display = 'block';
+
+        // Aguarda o usuário clicar para confirmar coleta
+        await new Promise((resolve) => {
+          confirmBtn.onclick = () => {
+            pontos++;
+            const premio = premios[Math.floor(Math.random() * premios.length)];
+            premiosDiv.innerHTML += premio + ' ';
+            statusDiv.textContent = `Coleta confirmada! Você ganhou: ${premio}`;
+            confirmBtn.style.display = 'none';
+            resolve();
+          };
+        });
+        break; // Após coletar, pode parar ou continuar (vou continuar)
+      }
+
+      await new Promise(r => setTimeout(r, 60));
+    }
+    animando = false;
+  }
+
+  // Função principal que faz o caminhão circular pela cidade e passa pelos bairros
+  async function iniciarRota() {
+    while (true) {
+      for (let i = 0; i < bairrosParaRota.length; i++) {
+        const bairroAtual = bairrosParaRota[i];
+        const rota = criarRotaSimples(truckMarker.getLatLng(), bairrosCoords[bairroAtual]);
+        await animarRota(rota);
+      }
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (animando) {
+      statusDiv.textContent = "O caminhão já está em movimento, aguarde.";
+      return;
+    }
+    const bairro = form.bairro.value;
+    const rua = form.rua.value.trim();
+    if (!bairro || !rua) {
+      statusDiv.textContent = "Preencha bairro e rua corretamente.";
+      return;
+    }
+    bairroEscolhido = bairro;
+    statusDiv.textContent = `Endereço selecionado: ${bairro}, ${rua}. Aguarde o caminhão.`;
+    if (!animando) iniciarRota();
+  });
+</script>
+
+</body>
+</html>

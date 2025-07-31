@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Minha Plantinha - Recicla+</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #e6f7ec;
+    }
+    .plant-container {
+      margin: 30px auto;
+      padding: 20px;
+      border: 2px dashed green;
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+    }
+    .plant-image {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+    .actions button {
+      margin: 5px;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 10px;
+      background-color: #a3d9a5;
+      border: none;
+      cursor: pointer;
+    }
+    .progress {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌱 Cuide da sua plantinha!</h1>
+  <div class="plant-container">
+    <img id="plant" class="plant-image" src="broto.png" alt="Plantinha">
+    <div class="actions">
+      <button onclick="reguar()">💧 Regar</button>
+      <button onclick="sol()">☀️ Dar Sol</button>
+      <button onclick="limpar()">🧹 Limpar</button>
+    </div>
+    <div class="progress">
+      <p>Crescimento: <span id="progress">0</span>%</p>
+    </div>
+  </div>
+
+  <script>
+    let crescimento = 0;
+
+    function atualizar() {
+      document.getElementById("progress").innerText = crescimento;
+
+      const plantImg = document.getElementById("plant");
+
+      if (crescimento >= 100) {
+        plantImg.src = "arvore.png";
+      } else if (crescimento >= 60) {
+        plantImg.src = "muda.png";
+      } else {
+        plantImg.src = "broto.png";
+      }
+    }
+
+    function reguar() {
+      crescimento += 10;
+      atualizar();
+    }
+
+    function sol() {
+      crescimento += 10;
+      atualizar();
+    }
+
+    function limpar() {
+      crescimento += 10;
+      atualizar();
+    }
+  </script>
+</body>
+</html>

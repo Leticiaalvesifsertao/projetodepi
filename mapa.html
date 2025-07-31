@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pontos de Coleta Recicla+</title>
+
+  <!-- CSS do Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+  <style>
+    body {
+      font-family: 'arial';
+      background-color: #f8f8f0; /* offwhite */
+      margin: 0;
+      padding: 0 10px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #273c06; /* verde escuro */
+      color:  #ece3d4;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      width: 100%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-weight: normal;
+      margin: 0;
+      font-size: 2rem;
+      color: #fff;
+    }
+
+    a.btn-back {
+      background: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background-color 0.3s, color 0.3s;
+      display: inline-block;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    a.btn-back:hover {
+      background-color: #fff;
+      color: #273c06;
+      text-decoration: none;
+    }
+
+    a.btn-saved {
+      background: #273c06;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+      display: inline-block;
+      border: 2px solid #fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    a.btn-saved:hover {
+      background-color: #fff;
+      color: #273c06;
+      text-decoration: none;
+    }
+
+    #map {
+      height: 95vh;
+      max-width: 900px;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Popup estilizado */
+    .leaflet-popup-content-wrapper {
+      background: #1b2e13;
+      color: #ffffff;
+      font-weight: normal;
+      border-radius: 18px;
+    }
+
+    .leaflet-popup-tip {
+      background: #1b2e13;
+    }
+
+    /* Botão dentro do popup */
+    .save-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      background-color: #d0e6b9;
+      color: #273c06;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .save-btn:hover {
+      background-color: #a3be7b;
+      color: #192107;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pontos de Coleta</h1>
+    <a href="paginainicial.html" class="btn-back">← Voltar ao Início</a>
+    <a href="enderecos.html" class="btn-saved">Ver locais salvos</a>
+  </header>
+
+  <div id="map"></div>
+
+  <!-- JS do Leaflet -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin=""
+  ></script>
+
+  <script>
+    const map = L.map('map').setView([-9.3897, -40.5020], 13);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution:
+        '&copy; <a href="https://carto.com/">CARTO</a>, &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(map);
+
+    const pontosDeColeta = [
+      {
+        nome: "Ponto de Coleta Centro",
+        descricao: "Coleta seletiva de papel e plástico.",
+        coords: [-9.3897, -40.5020],
+      },
+      {
+        nome: "Ponto de Coleta Bairro São José",
+        descricao: "Coleta de vidro e metal.",
+        coords: [-9.4000, -40.5100],
+      },
+      {
+        nome: "Ponto de Coleta Vila Eduardo",
+        descricao: "Ponto para resíduos eletrônicos.",
+        coords: [-9.3800, -40.4900],
+      },
+    ];
+
+    // Função para salvar no localStorage
+    function salvarLocalizacao(nome, descricao, coords) {
+      const locaisSalvos = JSON.parse(localStorage.getItem('locaisSalvos') || '[]');
+      // Evitar duplicatas
+      if (!locaisSalvos.some(l => l.nome === nome)) {
+        locaisSalvos.push({ nome, descricao, coords });
+        localStorage.setItem('locaisSalvos', JSON.stringify(locaisSalvos));
+        alert(`Local "${nome}" salvo!`);
+      } else {
+        alert(`O local "${nome}" já está salvo.`);
+      }
+    }
+
+    pontosDeColeta.forEach(ponto => {
+      const popupContent = `
+        <div>
+          <b>${ponto.nome}</b><br/>
+          ${ponto.descricao}<br/>
+          <button class="save-btn" onclick="salvarLocalizacao('${ponto.nome}', '${ponto.descricao}', [${ponto.coords[0]}, ${ponto.coords[1]}])">Salvar localização</button>
+        </div>
+      `;
+
+      L.marker(ponto.coords)
+        .addTo(map)
+        .bindPopup(popupContent);
+    });
+  </script>
+
+</body>
+</html>

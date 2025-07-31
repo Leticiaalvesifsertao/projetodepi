@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pontos de coleta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #f0ece4;
+      color: #000;
+      font-family: 'Arial', sans-serif;
+    }
+
+    header {
+      background-color: #273c06;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    header a.btn {
+      margin-top: 10px;
+    }
+
+    footer {
+      background-color: #232323;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      margin-top: 50px;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    footer a:hover {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .form-section, .table-section {
+      margin-top: 40px;
+    }
+
+    h3 {
+      color: #273c06;
+      font-weight: bold;
+    }
+
+    .table th {
+      background-color: #cfcfcf; 
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Pontos de Coleta</h1>
+    <a href="paginainicial.html" class="btn btn-light">← Voltar para Início</a>
+  </header>
+
+  <main class="container">
+    
+    <!-- Formulário -->
+    <section class="form-section">
+      <h3>Adicionar Informações sobre Reciclagem</h3>
+      <form action="#" method="post">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="nome" placeholder="Digite seu nome" required>
+        </div>
+        <div class="mb-3">
+          <label for="idade" class="form-label">Idade</label>
+          <input type="number" class="form-control" id="idade" placeholder="Digite sua idade" required>
+        </div>
+        <div class="mb-3">
+          <label for="tipoLixo" class="form-label">Tipo de Lixo</label>
+          <input type="text" class="form-control" id="tipoLixo" placeholder="Exemplo: Plástico, Vidro, Papel" required>
+        </div>
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição</label>
+          <textarea class="form-control" id="descricao" rows="3" placeholder="Descreva o tipo de lixo" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="pontoColeta" class="form-label">Ponto de Coleta</label>
+          <input type="text" class="form-control" id="pontoColeta" placeholder="Endereço do ponto de coleta" required>
+        </div>
+        <button type="submit" class="btn btn-success">Adicionar</button>
+      </form>
+    </section>
+
+    <!-- Tabela -->
+    <section class="table-section">
+      <h3 class="mt-5">Informações sobre Reciclagem</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Tipo de Lixo</th>
+            <th>Descrição</th>
+            <th>Ponto de Coleta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>Edson Marins</td>
+            <td>17</td>
+            <td>Plástico</td>
+            <td>Garrafas PET e embalagens plásticas.</td>
+            <td>Rua das Flores, 12</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>Gleice Kelly Viana</td>
+            <td>18</td>
+            <td>Vidro</td>
+            <td>Frascos e garrafas de vidro.</td>
+            <td>Av. Brasil, 300</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>Letícia Alves</td>
+            <td>17</td>
+            <td>Papel</td>
+            <td>Caixas de papelão, jornais e revistas.</td>
+            <td>Rua Rio de Janeiro, 45</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Recicla+. Todos os direitos reservados.</p>
+    <p>
+      <a href="sobre.html">Sobre nós</a> |
+      <a href="privacidade.html">Política de Privacidade</a> |
+      <a href="contato.html">Contato</a>
+    </p>
+    <div class="mt-2">
+      <a href="#">Facebook</a> |
+      <a href="#">Instagram</a> |
+      <a href="#">Twitter</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
